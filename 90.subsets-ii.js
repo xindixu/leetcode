@@ -16,7 +16,9 @@ const subsetsWithDup = (nums) => {
   const backtrack = (local, start) => {
     result.push([...local])
     for (let i = start; i < nums.length; i++) {
-      // only compare to the previous item that's greater than start
+      // We don't want to compare with items that's out of the range (i <= start)
+      // That item is already in the local array
+      // Only compare to the previous item that's greater than start
       // skip duplicates
       if (i > start && nums[i] === nums[i - 1]) {
         continue
