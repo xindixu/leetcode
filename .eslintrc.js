@@ -17,5 +17,6 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-continue': 'off',
     'max-len': ['error', { ignoreComments: true }],
+    'no-restricted-syntax': 'off',
   },
 }
