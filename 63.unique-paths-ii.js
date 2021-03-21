@@ -5,6 +5,52 @@
  */
 
 // @lc code=start
+/**
+ * @param {number[][]} obstacleGrid
+ * @return {number}
+ */
+const uniquePathsWithObstacles = (obstacleGrid) => {
+  const rows = obstacleGrid.length
+  const cols = obstacleGrid[0].length
+  if (obstacleGrid[0][0] === 1) {
+    return 0
+  }
+  obstacleGrid[0][0] = 1
+
+  // initialize first row
+  for (let c = 1; c < cols; c++) {
+    // 1 unique way to reach - from left
+    // -> only if both current and the grid from left are a spaces
+    // -> current should be 0, left grid should be 1 (processed already)
+    obstacleGrid[0][c] =
+      obstacleGrid[0][c] === 0 && obstacleGrid[0][c - 1] === 1 ? 1 : 0
+  }
+
+  // initialize first col
+  for (let r = 1; r < rows; r++) {
+    // 1 unique way to reach - from top
+    // -> only if both current and the grid from top are spaces
+    // -> current should be 0, top grid should be 1 (processed already)
+    obstacleGrid[r][0] =
+      obstacleGrid[r][0] === 0 && obstacleGrid[r - 1][0] === 1 ? 1 : 0
+  }
+
+  // fill the rest
+  for (let r = 1; r < rows; r++) {
+    for (let c = 1; c < cols; c++) {
+      if (obstacleGrid[r][c] === 1) {
+        obstacleGrid[r][c] = 0
+        continue
+      }
+
+      obstacleGrid[r][c] = obstacleGrid[r][c - 1] + obstacleGrid[r - 1][c]
+    }
+  }
+
+  return obstacleGrid[rows - 1][cols - 1]
+}
+// @lc code=end
+
 // Solution
 // Time: O(m*n)
 // Space: O(1) - reuse obstacleGrid
@@ -13,7 +59,7 @@
  * @param {number[][]} obstacleGrid
  * @return {number}
  */
-const uniquePathsWithObstacles = (obstacleGrid) => {
+const uniquePathsWithObstacles3 = (obstacleGrid) => {
   const totalRows = obstacleGrid.length
   const totalCols = obstacleGrid[0].length
 
@@ -27,13 +73,15 @@ const uniquePathsWithObstacles = (obstacleGrid) => {
   // initialize first row
   for (let i = 1; i < totalCols; i++) {
     // cur grid is not obstacle and grid on the left is space
-    obstacleGrid[0][i] = (obstacleGrid[0][i] === 0 && obstacleGrid[0][i - 1] === 1) ? 1 : 0
+    obstacleGrid[0][i] =
+      obstacleGrid[0][i] === 0 && obstacleGrid[0][i - 1] === 1 ? 1 : 0
   }
 
   // initialize first col
   for (let i = 1; i < totalRows; i++) {
     // cur grid is not obstacle and grid on the top is space
-    obstacleGrid[i][0] = (obstacleGrid[i][0] === 0 && obstacleGrid[i - 1][0] === 1) ? 1 : 0
+    obstacleGrid[i][0] =
+      obstacleGrid[i][0] === 0 && obstacleGrid[i - 1][0] === 1 ? 1 : 0
   }
 
   for (let r = 1; r < totalRows; r++) {
@@ -48,7 +96,6 @@ const uniquePathsWithObstacles = (obstacleGrid) => {
 
   return obstacleGrid[totalRows - 1][totalCols - 1]
 }
-// @lc code=end
 // My method:
 // Time: O(m*n)
 // Space: O(m*n)
