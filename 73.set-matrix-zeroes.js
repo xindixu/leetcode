@@ -16,6 +16,63 @@ const setZeroes = (matrix) => {
   const rows = matrix.length
   const cols = matrix[0].length
 
+  let firstRowShouldBeZeros = false
+
+  // mark zeros for cols and rows
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (matrix[r][c] === 0) {
+        if (r === 0) {
+          firstRowShouldBeZeros = true
+        } else {
+          // mark row 0
+          matrix[r][0] = 0
+          // mark col 0
+          matrix[0][c] = 0
+        }
+      }
+    }
+  }
+
+  // update grids (1, 1) to (rows - 1, cols - 1)
+  // don't update first col and first row since they indicates whether this row/col should be zeros or not
+  for (let r = 1; r < rows; r++) {
+    for (let c = 1; c < cols; c++) {
+      if (matrix[0][c] === 0 || matrix[r][0] === 0) {
+        matrix[r][c] = 0
+      }
+    }
+  }
+
+  // Update first col
+  if (matrix[0][0] === 0) {
+    for (let r = 0; r < rows; r++) {
+      matrix[r][0] = 0
+    }
+  }
+
+  // Update first row
+  if (firstRowShouldBeZeros) {
+    for (let c = 0; c < cols; c++) {
+      matrix[0][c] = 0
+    }
+  }
+}
+
+// @lc code=end
+
+// Solution
+// Time: O(m*n)
+// Space: O(1)
+/**
+ * @param {number[][]} matrix
+ * @return {void} Do not return anything, modify matrix in-place instead.
+ */
+const setZeroes3 = (matrix) => {
+  const rows = matrix.length
+  const cols = matrix[0].length
+
   // go thro each grid:
   // - mark if the col should be zero in the first row
   // - mark if the row should be zero in the firss col
@@ -91,8 +148,6 @@ const setZeroes = (matrix) => {
   }
 }
 
-// @lc code=end
-
 // My solution
 // Time: O(m*n)
 // Space: O(1)
@@ -121,7 +176,7 @@ const setZeroes2 = (matrix) => {
         matrix[0][c] = 0
 
         if (r === 0) {
-        // mark if first row should be zero
+          // mark if first row should be zero
           firstRowShouldBeZeros = true
         } else {
           curRowShouldBeZeros = true
