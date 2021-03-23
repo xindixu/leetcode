@@ -6,6 +6,10 @@
 
 // @lc code=start
 // backtrack
+// Time: O(4^n * n)
+// 4^n since max num of letters for each digit is 4. A tree with n levels and each level has max 4 branches
+// For each combination, it cost n to build it (since n digit, each digit is one letter)
+// Space: O(n)
 const MAP = {
   2: ["a", "b", "c"],
   3: ["d", "e", "f"],
