@@ -12,7 +12,7 @@
 const isPerfectSquare = (num) => {
   // [lo, hi]
   let lo = 1
-  let hi = num 
+  let hi = num
 
   // [hi + 1, hi]
   while (lo <= hi) {
@@ -36,7 +36,7 @@ const isPerfectSquare = (num) => {
  * @param {number} num
  * @return {boolean}
  */
- const isPerfectSquare2 = (num) => {
+const isPerfectSquare2 = (num) => {
   // [lo, hi)
   let lo = 1
   let hi = num + 1
@@ -55,4 +55,5 @@ const isPerfectSquare = (num) => {
       hi = mid
     }
   }
-  
+  return false
+}
