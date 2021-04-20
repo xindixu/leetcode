@@ -4,43 +4,127 @@
  * [34] Find First and Last Position of Element in Sorted Array
  */
 
-// @lc code=start
-
-const findFirstPosition = (nums, target) => {
+// [lo, hi]
+const findLowerBoundCC = (nums, target) => {
   let lo = 0
-  let hi = nums.length
-
-  while (lo < hi) {
-    const mid = Math.floor((lo + hi) / 2)
-
-    // nums[mid] === target -> keep
-    // nums[mid] < target -> must be on the right side
-    // nums[mid] > target -> must be on the left side
+  let hi = nums.length - 1
+  // terminate at [hi + 1, hi]
+  while (lo <= hi) {
+    const mid = lo + Math.floor((hi - lo) / 2)
 
     if (nums[mid] < target) {
+      // [mid + 1, hi]
       lo = mid + 1
-    } else {
-      hi = mid
+    } else if (nums[mid] === target) {
+      // go left
+      // [lo, mid - 1]
+      hi = mid - 1
+    } else if (nums[mid] > target) {
+      // [lo, mid - 1]
+      hi = mid - 1
     }
+  }
+
+  if (lo >= nums.length || nums[lo] !== target) {
+    return -1
   }
   return lo
 }
 
-const findLastPosition = (nums, target) => {
+const findUpperBoundCC = (nums, target) => {
+  let lo = 0
+  let hi = nums.length - 1
+  // terminate at [hi + 1, hi]
+  while (lo <= hi) {
+    const mid = lo + Math.floor((hi - lo) / 2)
+
+    if (nums[mid] < target) {
+      // [mid + 1, hi]
+      lo = mid + 1
+    } else if (nums[mid] === target) {
+      // go right
+      // [mid + 1, hi]
+      lo = mid + 1
+    } else if (nums[mid] > target) {
+      // [lo, mid - 1]
+      hi = mid - 1
+    }
+  }
+
+  if (hi < 0 || nums[hi] !== target) {
+    return -1
+  }
+  return hi
+}
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+const searchRange2 = (nums, target) => {
+  const lowerBound = findLowerBoundCC(nums, target)
+
+  if (lowerBound === -1) {
+    return [-1, -1]
+  }
+
+  const upperBound = findUpperBoundCC(nums, target)
+  return [lowerBound, upperBound]
+}
+
+// @lc code=start
+
+// [lo, hi)
+const findLowerBoundCO = (nums, target) => {
   let lo = 0
   let hi = nums.length
 
   while (lo < hi) {
-    const mid = Math.floor((lo + hi) / 2)
+    const mid = lo + Math.floor((hi - lo) / 2)
 
-    // nums[mid] === target -> don't keep, must be on the right side
-    // nums[mid] < target -> must be on the right side
-    // nums[mid] > target -> must be on the left side
-    if (nums[mid] <= target) {
+    if (nums[mid] < target) {
+      // [mid + 1, hi)
       lo = mid + 1
+    } else if (nums[mid] === target) {
+      // go left
+      // [lo, mid)
+      hi = mid
     } else {
+      // [lo, mid)
       hi = mid
     }
+  }
+
+  if (lo >= nums.length || nums[lo] !== target) {
+    return -1
+  }
+  return lo
+}
+
+const findUpperBoundCO = (nums, target) => {
+  let lo = 0
+  let hi = nums.length
+
+  while (lo < hi) {
+    const mid = lo + Math.floor((hi - lo) / 2)
+
+    if (nums[mid] < target) {
+      // [mid + 1, hi)
+      lo = mid + 1
+    } else if (nums[mid] === target) {
+      // go right
+      // [mid + 1, hi)
+      lo = mid + 1
+    } else {
+      // [lo, mid)
+      hi = mid
+    }
+  }
+
+  lo -= 1
+  if (lo < 0 || nums[lo] !== target) {
+    return -1
   }
   return lo
 }
@@ -51,12 +135,13 @@ const findLastPosition = (nums, target) => {
  * @return {number[]}
  */
 const searchRange = (nums, target) => {
-  const left = findFirstPosition(nums, target)
-  if (left === nums.length || nums[left] !== target) {
+  const lowerBound = findLowerBoundCO(nums, target)
+  if (lowerBound === -1) {
     return [-1, -1]
   }
-  const right = findLastPosition(nums, target) - 1
+  const upperBound = findUpperBoundCO(nums, target)
 
-  return [left, right]
+  return [lowerBound, upperBound]
 }
+
 // @lc code=end
