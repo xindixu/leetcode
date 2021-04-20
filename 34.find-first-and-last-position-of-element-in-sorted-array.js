@@ -25,6 +25,8 @@ const findLowerBoundCC = (nums, target) => {
     }
   }
 
+  // range for lo: [0, nums.length]
+  // hi = nums.length - 1, terminates at [hi + 1, hi]
   if (lo >= nums.length || nums[lo] !== target) {
     return -1
   }
@@ -34,7 +36,7 @@ const findLowerBoundCC = (nums, target) => {
 const findUpperBoundCC = (nums, target) => {
   let lo = 0
   let hi = nums.length - 1
-  // terminate at [hi + 1, hi]
+  // terminate at [lo, lo - 1]
   while (lo <= hi) {
     const mid = lo + Math.floor((hi - lo) / 2)
 
@@ -51,6 +53,8 @@ const findUpperBoundCC = (nums, target) => {
     }
   }
 
+  // range for hi: [-1, nums.length - 1]
+  // lo = 0, terminates at [lo, lo - 1]
   if (hi < 0 || nums[hi] !== target) {
     return -1
   }
@@ -80,6 +84,7 @@ const findLowerBoundCO = (nums, target) => {
   let lo = 0
   let hi = nums.length
 
+  // terminates at [hi, hi)
   while (lo < hi) {
     const mid = lo + Math.floor((hi - lo) / 2)
 
@@ -96,6 +101,8 @@ const findLowerBoundCO = (nums, target) => {
     }
   }
 
+  // range for lo: [0, nums.length)
+  // hi = nums.length, terminates at [hi, hi)
   if (lo >= nums.length || nums[lo] !== target) {
     return -1
   }
@@ -106,6 +113,7 @@ const findUpperBoundCO = (nums, target) => {
   let lo = 0
   let hi = nums.length
 
+  // terminates at [lo, lo)
   while (lo < hi) {
     const mid = lo + Math.floor((hi - lo) / 2)
 
@@ -122,11 +130,13 @@ const findUpperBoundCO = (nums, target) => {
     }
   }
 
-  lo -= 1
-  if (lo < 0 || nums[lo] !== target) {
+  hi -= 1
+  // range for hi: [0, nums.length)
+  // lo = 0, terminates at [lo, lo)
+  if (hi < 0 || nums[hi] !== target) {
     return -1
   }
-  return lo
+  return hi
 }
 
 /**
