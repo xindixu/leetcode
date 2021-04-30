@@ -5,6 +5,16 @@
  */
 
 // @lc code=start
+/*
+  1. When adding chars, updates:
+    - set of unique chars
+  2. When to collapse:
+    - when there's duplicated chars, let window starts with that duplicated char
+  3. When removing chars, updates:
+    - set of unique chars
+  4. result 
+    - max length
+*/
 /**
  * @param {string} s
  * @return {number}
@@ -19,13 +29,16 @@ const lengthOfLongestSubstring = (s) => {
 
   while (r < s.length) {
     const charAdded = s.charAt(r)
-    if (dict[charAdded] || dict[charAdded] === 0) {
+    r++
+
+    // collapse
+    if (charAdded in dict) {
       l = Math.max(l, dict[charAdded] + 1)
     }
-    maxLength = Math.max(maxLength, r - l + 1)
-    dict[charAdded] = r
-
-    r++
+    // update set of unique chars
+    dict[charAdded] = r - 1
+    // update result
+    maxLength = Math.max(maxLength, r - l)
   }
   return maxLength
 }
