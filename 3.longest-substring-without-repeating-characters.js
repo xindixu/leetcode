@@ -9,11 +9,12 @@
   1. When adding chars, updates:
     - set of unique chars
   2. When to collapse:
-    - when there's duplicated chars, let window starts with that duplicated char
+    - when there's duplicated chars (dict[charAdded] > 1)
   3. When removing chars, updates:
     - set of unique chars
   4. result 
     - max length
+    - do it after collapse. After collapsing, the window should be valid again
 */
 /**
  * @param {string} s
@@ -31,12 +32,17 @@ const lengthOfLongestSubstring = (s) => {
     const charAdded = s.charAt(r)
     r++
 
-    // collapse
-    if (charAdded in dict) {
-      l = Math.max(l, dict[charAdded] + 1)
+    // update
+    dict[charAdded] = (dict[charAdded] || 0) + 1
+
+    // collapse when there are duplicated chars
+    while (dict[charAdded] > 1) {
+      const charRemoved = s.charAt(l)
+      l++
+      // update
+      dict[charRemoved]--
     }
-    // update set of unique chars
-    dict[charAdded] = r - 1
+
     // update result
     maxLength = Math.max(maxLength, r - l)
   }
