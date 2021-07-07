@@ -17,5 +17,7 @@ module.exports = {
     "no-param-reassign": "off",
     "no-continue": "off",
     "no-restricted-syntax": "off",
+    "no-var": "error",
+    "func-style:" ["error", "expression"]
   },
 }
