@@ -18,6 +18,6 @@ module.exports = {
     "no-continue": "off",
     "no-restricted-syntax": "off",
     "no-var": "error",
-    "func-style:" ["error", "expression"]
+    "func-style": ["error", "expression"],
   },
 }
