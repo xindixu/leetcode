@@ -8,7 +8,7 @@
 const findLowerBoundCC = (nums, target) => {
   let lo = 0
   let hi = nums.length - 1
-  // terminate at [hi + 1, hi]
+
   while (lo <= hi) {
     const mid = lo + Math.floor((hi - lo) / 2)
 
@@ -25,8 +25,9 @@ const findLowerBoundCC = (nums, target) => {
     }
   }
 
-  // range for lo: [0, nums.length]
-  // hi = nums.length - 1, terminates at [hi + 1, hi]
+  // The value we want: lo, since we are looking for the lower bound
+  // Range for lo: [0, nums.length]
+  // - When the loop terminates with hi = nums.length - 1, lo = hi + 1. That is lo = nums.length
   if (lo >= nums.length || nums[lo] !== target) {
     return -1
   }
@@ -36,7 +37,7 @@ const findLowerBoundCC = (nums, target) => {
 const findUpperBoundCC = (nums, target) => {
   let lo = 0
   let hi = nums.length - 1
-  // terminate at [lo, lo - 1]
+
   while (lo <= hi) {
     const mid = lo + Math.floor((hi - lo) / 2)
 
@@ -53,9 +54,10 @@ const findUpperBoundCC = (nums, target) => {
     }
   }
 
+  // The value we want: hi, since we are looking for the upper bound
   // range for hi: [-1, nums.length - 1]
-  // lo = 0, terminates at [lo, lo - 1]
-  if (hi < 0 || nums[hi] !== target) {
+  // - When the loop terminates with lo = 0, hi = lo - 1. That is hi = -1
+  if (hi <= -1 || nums[hi] !== target) {
     return -1
   }
   return hi
@@ -84,7 +86,6 @@ const findLowerBoundCO = (nums, target) => {
   let lo = 0
   let hi = nums.length
 
-  // terminates at [hi, hi)
   while (lo < hi) {
     const mid = lo + Math.floor((hi - lo) / 2)
 
@@ -101,8 +102,9 @@ const findLowerBoundCO = (nums, target) => {
     }
   }
 
-  // range for lo: [0, nums.length)
-  // hi = nums.length, terminates at [hi, hi)
+  // The value we want: lo, since we are looking for the lower bound
+  // Range for lo: [0, nums.length)
+  // - When the loop terminates with hi = nums.length, lo = hi. That is lo = nums.length
   if (lo >= nums.length || nums[lo] !== target) {
     return -1
   }
@@ -130,10 +132,14 @@ const findUpperBoundCO = (nums, target) => {
     }
   }
 
+  // The value we want: hi, since we are looking for the upper bound
+  // Range for hi: [0, nums.length)
+  // - When loop terminates with lo = 0, hi = lo. That is hi = 0
+  // Note, we have a CO interval: [something, hi). This means that hi is not actually a possible answer. The possible answer should be hi - 1
+
+  // Range for hi - 1: [-1, nums.length - 1)
   hi -= 1
-  // range for hi: [0, nums.length)
-  // lo = 0, terminates at [lo, lo)
-  if (hi < 0 || nums[hi] !== target) {
+  if (hi <= -1 || nums[hi] !== target) {
     return -1
   }
   return hi
