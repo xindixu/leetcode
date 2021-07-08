@@ -14,23 +14,25 @@
  */
 
 // Recursively
+// Input a node `head`, reverse the list staring with `head`, return the new head after reversing
 const reverseHelper = (head) => {
-  // if this is the original last node (new head)
+  // If it is the last node, no need to reverse anything, and the new head after reversing is itself
   if (head.next == null) {
     return head
   }
 
   // 1 -> [ 2 <- 3 <- 4 <- 5 ]
-  //       next           last
-  const last = reverseHelper(head.next)
+  //       next           newHead
+  //  reverse the rest of the list
+  const newHead = reverseHelper(head.next)
   const { next } = head
   //  1  <-  2
   // head  next
   next.next = head
   head.next = null
 
-  // return the original last node (new head)
-  return last
+  // return the the new head after reversing
+  return newHead
 }
 
 const reverseList = (head) => {
