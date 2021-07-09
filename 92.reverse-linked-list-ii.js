@@ -16,10 +16,10 @@ const reverseFirstN = (head, n) => {
     return head
   }
 
+  const { next } = head
   //   1 -> [ 2 <- 3 ]          4 -> 5
   //  head  next  newHead  successor
-  const newHead = reverseFirstN(head.next, n - 1)
-  const { next } = head
+  const newHead = reverseFirstN(next, n - 1)
   // 1 <- 2
   next.next = head
   // 4 <- 1
