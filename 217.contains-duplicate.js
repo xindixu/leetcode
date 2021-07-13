@@ -14,15 +14,3 @@ const containsDuplicate = (nums) => {
   return nums.length !== set.size
 }
 // @lc code=end
-
-// Time: O(n)
-// Space: O(n)
-// Using Set
-/**
- * @param {number[]} nums
- * @return {boolean}
- */
- const containsDuplicate = (nums) => {
-  const set = new Set(nums)
-  return nums.length !== set.size
-}
